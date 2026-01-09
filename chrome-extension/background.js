@@ -24,11 +24,11 @@ function initializeEngine() {
                 isEngineReady = true;
                 console.log("[background.js] Fairy-Stockfish UCI engine ready");
             } else if (type === 'BEST_MOVE') {
-                // Resolve pending move request
-                const pendingRequests = Array.from(pendingMoveRequests.values());
-                if (pendingRequests.length > 0) {
-                    const callback = pendingRequests[0];
-                    pendingMoveRequests.clear();
+                // Resolve the first pending move request
+                const firstEntry = pendingMoveRequests.entries().next();
+                if (!firstEntry.done) {
+                    const [requestId, callback] = firstEntry.value;
+                    pendingMoveRequests.delete(requestId);
                     callback({ bestMove });
                 }
             } else if (type === 'ERROR') {

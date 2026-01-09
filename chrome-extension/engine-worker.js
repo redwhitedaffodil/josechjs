@@ -30,14 +30,16 @@ function handleEngineOutput(output) {
     
     // Check if engine is ready
     if (output.includes('uciok')) {
-        fsfEngine.uci('isready');
+        // Wait a bit before sending isready to ensure engine is stable
+        setTimeout(() => fsfEngine.uci('isready'), 10);
     } else if (output.includes('readyok')) {
         isReady = true;
         postMessage({ type: 'READY' });
     }
     
     // Parse bestmove from engine output
-    const bestmoveMatch = output.match(/^bestmove\s+([a-h][1-8][a-h][1-8][qrbn]?)/);
+    // Handle standard moves (e2e4), castling (e1g1), and promotion (e7e8q)
+    const bestmoveMatch = output.match(/^bestmove\s+([a-z][0-9][a-z][0-9][qrbnk]?)/);
     if (bestmoveMatch && pendingResponse) {
         const bestMove = bestmoveMatch[1];
         pendingResponse({ bestMove });
@@ -58,6 +60,15 @@ self.onmessage = function(event) {
             return;
         }
         
+        // Reject if already calculating
+        if (pendingResponse) {
+            postMessage({ 
+                type: 'ERROR', 
+                error: 'Engine is busy calculating another move' 
+            });
+            return;
+        }
+        
         // Set up promise to wait for bestmove
         pendingResponse = (result) => {
             postMessage({ 
@@ -66,10 +77,13 @@ self.onmessage = function(event) {
             });
         };
         
-        // Send UCI commands to engine
+        // Send UCI commands to engine with slight delay to ensure proper sequencing
         const searchDepth = depth || 15;
         fsfEngine.uci(`position fen ${fen}`);
-        fsfEngine.uci(`go depth ${searchDepth}`);
+        // Small delay to let position command be processed
+        setTimeout(() => {
+            fsfEngine.uci(`go depth ${searchDepth}`);
+        }, 5);
         
     } else if (type === 'SET_DEPTH') {
         // Depth will be used in next calculation
