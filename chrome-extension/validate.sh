@@ -26,10 +26,13 @@ REQUIRED_FILES=(
     "manifest.json"
     "background.js"
     "content.js"
+    "engine-worker.js"
     "popup/popup.html"
     "popup/popup.js"
     "lib/ffish.js"
     "lib/ffish.wasm"
+    "lib/fsf14.js"
+    "lib/fsf14.wasm"
     "icons/icon16.png"
     "icons/icon48.png"
     "icons/icon128.png"
@@ -46,7 +49,7 @@ done
 # 3. Check JavaScript syntax
 echo ""
 echo "✓ Validating JavaScript syntax..."
-for jsfile in background.js content.js popup/popup.js; do
+for jsfile in background.js content.js engine-worker.js popup/popup.js; do
     if ! node --check "$jsfile" 2>&1; then
         echo "  ❌ Syntax error in $jsfile"
         exit 1
