@@ -18,8 +18,7 @@
   },
   
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
   
   "content_scripts": [
@@ -33,7 +32,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["lib/ffish.js", "lib/ffish.wasm"],
+      "resources": ["lib/ffish.js", "lib/ffish.wasm", "lib/fsf14.js", "lib/fsf14.wasm", "engine-worker.js"],
       "matches": ["*://lichess.org/*"]
     }
   ],
