@@ -5,7 +5,7 @@
 // @match         *://lichess.org/*
 // @run-at        document-start
 // @grant         none
-// @require       https://raw.githubusercontent.com/workinworld/stkfish/main/stockfish8.js
+// @require       https://raw.githubusercontent.com/redwhitedaffodil/josechjs/refs/heads/main/violentmonkey-script/stockfish8.js
 // ==/UserScript==
 
 let chessEngine;
