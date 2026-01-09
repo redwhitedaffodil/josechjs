@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chess Assistant Settings</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        h1 {
+            font-size: 18px;
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .status.ready {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .setting {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>♟️ Chess Assistant</h1>
+    
+    <div id="status" class="status loading">
+        Initializing engine...
+    </div>
+    
+    <div class="setting">
+        <label for="variant">Variant</label>
+        <select id="variant">
+            <option value="chess">Standard Chess</option>
+            <option value="crazyhouse">Crazyhouse</option>
+            <option value="atomic">Atomic</option>
+            <option value="antichess">Antichess</option>
+            <option value="horde">Horde</option>
+            <option value="kingofthehill">King of the Hill</option>
+            <option value="3check">Three-Check</option>
+            <option value="racingkings">Racing Kings</option>
+        </select>
+    </div>
+    
+    <div class="setting">
+        <label for="depth">Search Depth</label>
+        <select id="depth">
+            <option value="10">10 (Fast)</option>
+            <option value="15" selected>15 (Balanced)</option>
+            <option value="20">20 (Strong)</option>
+            <option value="25">25 (Very Strong)</option>
+        </select>
+    </div>
+    
+    <div class="info">
+        Powered by Fairy-Stockfish WASM<br>
+        Supports 80+ chess variants
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
